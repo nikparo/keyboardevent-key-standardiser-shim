@@ -26,7 +26,7 @@ export const KEYMAP = {
   'Live': 'TV', // Firefox 36
   'Zoom': 'ZoomToggle', // IE (9?), Firefox 36
   'SelectMedia': 'LaunchMediaPlayer', // IE (9?), Firefox 36
-  // Firefox 36+, not included by default since they are rarely used and will stop working if the shim restores native keys
+  // XXX: Keys below will stop working in FF 37-48 if the shim restores native keys
   'MediaSelect': 'LaunchMediaPlayer', // Firefox 37-48
   'VolumeUp': 'AudioVolumeUp', // IE (9?), Firefox 48
   'VolumeDown': 'AudioVolumeDown', // IE (9?), Firefox 48
@@ -42,10 +42,7 @@ export const VERIFIED_KEYS = {
   'ArrowRight': true
   // 'Delete': true,
   // 'Escape': true,
-  // 'ContextMenu': true,
-  // 'ScrollLock': true,
   // ' ': true,
-  // 'NonConvert': true,
 };
 
 function shimKeys() {
@@ -53,10 +50,10 @@ function shimKeys() {
     return;
   }
   const proto = KeyboardEvent.prototype;
-  const nativeDescriptor = Object.getOwnPropertyDescriptor(proto, 'key');
+  const nativeKey = Object.getOwnPropertyDescriptor(proto, 'key');
 
-  // Basic check to make sure we are not overwriting a polyfill or ourselves.
-  if (!nativeDescriptor || !/\{\s*\[native code\]\s*\}/.test('' + nativeDescriptor.get)) {
+  // Ensure that we are not overwriting a polyfill or ourselves.
+  if (!nativeKey || !/\{\s*\[native code\]\s*\}/.test('' + nativeKey.get)) {
     return;
   }
 
@@ -66,18 +63,16 @@ function shimKeys() {
     configurable: true,
     enumerable: true,
     get() {
-      const nativeKey = nativeDescriptor.get.call(this);
+      const key = nativeKey.get.call(this);
 
       // Unload the shim and restore native key getter if we already get correct keys
-      if (VERIFIED_KEYS[nativeKey]) {
-        console.info(`Event.key verified good by "${nativeKey}", restoring native key handling.`);
+      if (VERIFIED_KEYS[key]) {
         delete proto.key;
-        Object.defineProperty(proto, 'key', nativeDescriptor);
-        return nativeKey;
+        Object.defineProperty(proto, 'key', nativeKey);
+        return key;
       }
-
       // Cache the key so that we don't need to call the getter again.
-      return this.key = KEYMAP[nativeKey] || nativeKey;
+      return this.key = KEYMAP[key] || key;
     },
     set(value) {
       Object.defineProperty(this, 'key', { value, enumerable: true, writable: false });
