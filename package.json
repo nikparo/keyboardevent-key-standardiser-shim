@@ -1,0 +1,34 @@
+{
+  "name": "keyboardevent-key-standardiser-shim",
+  "version": "0.2.1",
+  "description": "Shim fixing most non-standard event.key values",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nikparo/keyboardevent-key-standardiser-shim.git"
+  },
+  "keywords": [
+    "key",
+    "event",
+    "standard",
+    "shim",
+    "polyfill",
+    "keyboard",
+    "keyboard-event",
+    "KeyboardEvent",
+    "browser"
+  ],
+  "author": "Nik Paro",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nikparo/keyboardevent-key-standardiser-shim/issues"
+  },
+  "homepage": "https://github.com/nikparo/keyboardevent-key-standardiser-shim#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0"
+  }
+}
