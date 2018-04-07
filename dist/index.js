@@ -1,6 +1,9 @@
 'use strict';
 
-export const KEYMAP = {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var KEYMAP = exports.KEYMAP = {
   'Up': 'ArrowUp', // IE, Edge, Firefox 36
   'Down': 'ArrowDown',
   'Left': 'ArrowLeft',
@@ -35,7 +38,7 @@ export const KEYMAP = {
 
 // By verifying that we get known good keys we can restore the native event.key behaviour.
 // XXX: Verify what values Edge gives for 'Delete' etc.
-export const VERIFIED_KEYS = {
+var VERIFIED_KEYS = exports.VERIFIED_KEYS = {
   'ArrowUp': true,
   'ArrowDown': true,
   'ArrowLeft': true,
@@ -49,8 +52,8 @@ function shimKeys() {
   if (!window.KeyboardEvent) {
     return;
   }
-  const proto = KeyboardEvent.prototype;
-  const nativeKey = Object.getOwnPropertyDescriptor(proto, 'key');
+  var proto = KeyboardEvent.prototype;
+  var nativeKey = Object.getOwnPropertyDescriptor(proto, 'key');
 
   // Ensure that we are not overwriting a polyfill or ourselves.
   if (!nativeKey || !/\{\s*\[native code\]\s*\}/.test('' + nativeKey.get)) {
@@ -62,8 +65,8 @@ function shimKeys() {
   Object.defineProperty(proto, 'key', {
     configurable: true,
     enumerable: true,
-    get() {
-      const key = nativeKey.get.call(this);
+    get: function get() {
+      var key = nativeKey.get.call(this);
 
       // Unload the shim and restore native key getter if we already get correct keys
       if (VERIFIED_KEYS[key]) {
@@ -74,8 +77,8 @@ function shimKeys() {
       // Cache the key so that we don't need to call the getter again.
       return this.key = KEYMAP[key] || key;
     },
-    set(value) {
-      Object.defineProperty(this, 'key', { value, enumerable: true, writable: false });
+    set: function set(value) {
+      Object.defineProperty(this, 'key', { value: value, enumerable: true, writable: false });
       return value;
     }
   });
