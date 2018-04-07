@@ -1,5 +1,7 @@
 # KeyboardEvent key standardiser shim
 
+**_This project is in an alpha state, and needs testing. Use in a production environment is not recommended._**
+
 Internet Explorer, Edge, and Firefox 36 and older (Firefox up to 48 in case of some media keys) suffer from non-standard `event.key` values. This shim fixes most (or at least the most common) of those. It doesn't polyfill `event.key` if it doesn't exist natively, but it plays well polyfills that do, such as [https://github.com/cvan/keyboardevent-key-polyfill](keyboardevent-key-polyfill).
 
 ## Usage

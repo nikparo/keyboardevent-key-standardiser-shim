@@ -48,7 +48,7 @@ var VERIFIED_KEYS = exports.VERIFIED_KEYS = {
   // ' ': true,
 };
 
-function shimKeys() {
+function insertKeyShim() {
   if (!window.KeyboardEvent) {
     return;
   }
@@ -84,4 +84,4 @@ function shimKeys() {
   });
 }
 
-shimKeys();
+insertKeyShim();
