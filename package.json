@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel --presets babel-preset-env src -d dist"
+    "build": "babel --presets babel-preset-env src -d dist",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
