@@ -52,7 +52,9 @@ import 'keyboardevent-key-standardiser-shim';
 | VolumeMute <sup>3  | AudioVolumeMute    | current | current | 48      |
 
 <sup>1</sup> Note that `event.metaKey` is normally set to `false` on windows, even when `Meta` (`Win`) is pressed.
+
 <sup>2</sup> It should be possible to use `event.locale` to dynamically map `Decimal` and `Separator` to the regionally correct keys.
+
 <sup>3</sup> Firefox 37+ will be considered by the shim as standard complient, so if you need this key on FF 37-48, considering checking for it specifically.
 
 _If you have the possibility to test complience of keys marked with a question mark, or if you find other browsers returning non-standard keys, then please report your findings (e.g. by opening an issue)._
