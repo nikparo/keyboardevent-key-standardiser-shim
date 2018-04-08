@@ -1,39 +1,34 @@
 'use strict';
 
 export const KEYMAP = {
-  'Up':         'ArrowUp',     // IE, Edge, Firefox 36
+  'Up':         'ArrowUp',
   'Down':       'ArrowDown',
   'Left':       'ArrowLeft',
   'Right':      'ArrowRight',
-  'Del':        'Delete',      // IE (9?), Firefox 36
-  'Crsel':      'CrSel',       // IE (9?), Firefox 36
-  'Exsel':      'ExSel',       // IE (9?), Firefox 36
-  'Esc':        'Escape',      // IE (9?), Firefox 36
-  'Apps':       'ContextMenu', // IE (9?), Firefox 36
-  'OS':         'Meta',        // IE, Firefox          // Win key on windows, super & hyper on linux. 
-  'Scroll':     'ScrollLock',  // IE
-  'Spacebar':   ' ',           // IE 11, Firefox 36
-  'Nonconvert': 'NonConvert',  // IE (9?), Firefox 36
-  'Decimal':    '.' || ',',    // Depends on browser encoding afaik. Can we easily detect which one to use?
-  'Separator':  ',' || '.',    // Presumably always opposite to 'Decimal'
+  'Del':        'Delete',
+  'Crsel':      'CrSel',
+  'Exsel':      'ExSel',
+  'Esc':        'Escape',
+  'Apps':       'ContextMenu',
+  'OS':         'Meta',
+  'Scroll':     'ScrollLock',
+  'Spacebar':   ' ',
+  'Nonconvert': 'NonConvert',
+  'Decimal':    '.' || ',',
+  'Separator':  ',' || '.',
   'Multiply':   '*',
   'Add':        '+',
   'Divide':     '/',
   'Subtract':   '-',
-  'MediaNextTrack':     'MediaTrackNext',     // IE (9?), Firefox 36
-  'MediaPreviousTrack': 'MediaTrackPrevious', // IE (9?), Firefox 36
-  'MediaFastForward':   'FastFwd',            // Firefox 36?
-  'Live':               'TV',                 // Firefox 36
-  'Zoom':               'ZoomToggle',         // IE (9?), Firefox 36
-  'SelectMedia':        'LaunchMediaPlayer',  // IE (9?), Firefox 36
-  // XXX: Keys below will stop working in FF 37-48 if the shim restores native keys
-  'MediaSelect':        'LaunchMediaPlayer',  // Firefox 37-48
-  'VolumeUp':           'AudioVolumeUp',      // IE (9?), Firefox 48
-  'VolumeDown':         'AudioVolumeDown',    // IE (9?), Firefox 48
-  'VolumeMute':         'AudioVolumeMute',    // IE (9?), Firefox 48
+  'MediaNextTrack':     'MediaTrackNext',
+  'MediaPreviousTrack': 'MediaTrackPrevious',
+  'MediaFastForward':   'FastFwd',
+  'Live':               'TV',
+  'Zoom':               'ZoomToggle',
+  'SelectMedia':        'LaunchMediaPlayer',
 };
 
-// By verifying that we get known good keys we can restore the native event.key behaviour.
+// Keys that indicate that the standard is followed
 // XXX: Verify what values Edge gives for 'Delete' etc.
 export const VERIFIED_KEYS = {
   'ArrowUp': true,
