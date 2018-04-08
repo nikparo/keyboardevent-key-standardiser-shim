@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>KeyboardEvent key standardiser shim tester</title>
+  <meta name="description" content="KeyboardEvent key standardiser shim tester">
+  <meta name="author" content="Nik Paro">
+
+  <style>
+    th, td {
+      padding: 8px;
+      min-width: 100px;
+      text-align: left;
+    }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+  <table id="table">
+    <tr>
+      <th>Event type</th>
+      <th>Native key</th>
+      <th>Standard key</th>
+    </tr>
+  </table>
+  <script>
+    var table = document.getElementById('table');
+    var nativeKey = Object.getOwnPropertyDescriptor(KeyboardEvent.prototype, 'key');
+
+    document.addEventListener('keydown', function(event) {
+      event.preventDefault();
+      var row = document.createElement('tr');
+      row.innerHTML = '<td>'+event.type+'</td>' + '<td>"'+nativeKey.get.call(event)+'"</td>' + '<td>"'+event.key+'"</td>'
+      table.insertBefore(row, table.children[1]);
+    });
+  </script>
+  <script src="dist/index.js"></script>
+</body>
+</html>
