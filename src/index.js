@@ -1,6 +1,6 @@
 'use strict';
 
-export const KEYMAP = {
+const KEYMAP = {
   'Up':         'ArrowUp',
   'Down':       'ArrowDown',
   'Left':       'ArrowLeft',
@@ -11,6 +11,7 @@ export const KEYMAP = {
   'Esc':        'Escape',
   'Apps':       'ContextMenu',
   'OS':         'Meta',
+  'Win':        'Meta',
   'Scroll':     'ScrollLock',
   'Spacebar':   ' ',
   'Nonconvert': 'NonConvert',
@@ -26,18 +27,28 @@ export const KEYMAP = {
   'Live':               'TV',
   'Zoom':               'ZoomToggle',
   'SelectMedia':        'LaunchMediaPlayer',
+  'MediaSelect':        'LaunchMediaPlayer',
+  'VolumeUp':           'AudioVolumeUp',
+  'VolumeDown':         'AudioVolumeDown',
+  'VolumeMute':         'AudioVolumeMute',
 };
 
 // Keys that indicate that the standard is followed
-// XXX: Verify what values Edge gives for 'Delete' etc.
-export const VERIFIED_KEYS = {
+const VERIFIED_KEYS = {
   'ArrowUp': true,
   'ArrowDown': true,
   'ArrowLeft': true,
   'ArrowRight': true,
-  // 'Delete': true,
-  // 'Escape': true,
-  // ' ': true,
+  'Delete': true,
+  'Escape': true,
+  'ContextMenu': true,
+  'Meta': true,
+  'MediaTrackNext': true,
+  'MediaTrackPrevious': true,
+  'LaunchMediaPlayer': true,
+  'AudioVolumeUp': true,
+  'AudioVolumeDown': true,
+  'AudioVolumeMute': true,
 };
 
 function insertKeyShim() {
@@ -58,22 +69,34 @@ function insertKeyShim() {
     configurable: true,
     enumerable: true,
     get() {
-      const key = nativeKey.get.call(this);
+      let key = nativeKey.get.call(this);
 
       // Unload the shim and restore native key getter if we already get correct keys
       if (VERIFIED_KEYS[key]) {
         delete proto.key;
         Object.defineProperty(proto, 'key', nativeKey);
-        return key;
       }
       // Cache the key so that we don't need to call the getter again.
-      return this.key = KEYMAP[key] || key;
-    },
-    set(value) {
-      Object.defineProperty(this, 'key', { value, enumerable: true, writable: false });
-      return value;
+      // Not using a setter, since IE 11 confuses `this` (the event) and event.__proto__ and ends up in a loop.
+      // IE still doesn't cache the key like this, but at least it doesn't loop.
+      key = KEYMAP[key] || key;
+      Object.defineProperty(this, 'key', { value: key, enumerable: true, writable: false });
+      return key;
     },
   });
 }
 
 insertKeyShim();
+
+const shimExports = {
+  KEYMAP,
+  VERIFIED_KEYS,
+};
+
+if (typeof define === 'function' && define.amd) {
+  define('keyboardevent-key-standardiser-shim', shimExports);
+} else if (typeof exports !== 'undefined' && typeof module !== 'undefined') {
+  module.exports = shimExports;
+} else if (window) {
+  window.keyboardeventKeyStandardiserShim = shimExports;
+}
