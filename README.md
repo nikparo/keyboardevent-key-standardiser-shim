@@ -1,6 +1,6 @@
 # KeyboardEvent key standardiser shim
 
-Current Internet Explorer and Microsoft Edge, as well as Firefox 36 and older (mainly), suffer from non-standard `event.key` values. This shim fixes most (or at least the most common) of those. It does not polyfill `event.key` unless it exist natively, but it plays well polyfills that do, such as [https://github.com/cvan/keyboardevent-key-polyfill](keyboardevent-key-polyfill).
+Current Internet Explorer and Microsoft Edge, as well as Firefox 36 and older (mainly), suffer from non-standard `event.key` values. This shim fixes most (or at least the most common) of those. It does not polyfill `event.key` unless it exist natively, but it plays well with polyfills that do, such as [~~keyboardevent-key-polyfill~~](https://github.com/cvan/keyboardevent-key-polyfill). (Edit: Turns out the polyfill does not play well with us and forcefully overwrites the IE & Edge native `event.key` [#20](https://github.com/cvan/keyboardevent-key-polyfill/issues/20))
 
 ## Installation
 
